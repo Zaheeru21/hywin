@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hywin Engineering & Co</title>
+    <link rel="icon" href="../static/img/titleicon.jpg">
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Roboto', sans-serif;
+            font-size: 18px;
+            line-height: 1.6;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* Full-screen video background */
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .header {
+            background: linear-gradient(to right, #8fa3c5,  #215dc5);
+            padding: 5px 0; 
+            text-align: center;
+            color: white;
+        }
+
+        .header nav {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 3em;
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .header h4 {
+            margin: 10px 0;
+            font-size: 1.4em;
+            color: #ddd;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+        }
+
+        .header ul {
+            list-style: none;
+            padding: 0;
+            margin: 20px 0;
+            display: flex;
+            gap: 30px;
+        }
+
+        .header ul li {
+            margin: 0;
+        }
+
+        .header ul li a {
+            text-decoration: none;
+            color: white;
+            padding: 12px 25px;
+            border: 1px solid transparent;
+            border-radius: 25px;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-size: 1.1em;
+            text-transform: uppercase;
+        }
+
+        .header ul li a:hover {
+            background: rgb(14, 0, 207);
+            color: #eeeeee;
+            border-color: #000000;
+        }
+
+        .header + .slideshow-container {
+            border-top: 5px solid black;
+        }
+
+        .slideshow-container {
+            position: relative;
+            margin: auto;
+            overflow: hidden;
+            width: 100%;
+            background-color: black;
+        }
+
+        .slides {
+            display: none;
+            background-color: black;
+        }
+
+        .slides img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+            border-radius: 0px;
+        }
+
+        .dot-container {
+            text-align: center;
+            background: black;
+            padding: 10px 0;
+        }
+
+        .dot {
+            cursor: pointer;
+            height: 15px;
+            width: 15px;
+            margin: 0 2px;
+            background-color: #bbb;
+            border-radius: 50%;
+            display: inline-block;
+            transition: background-color 0.6s ease;
+        }
+
+        .active, .dot:hover {
+            background-color: #0612f4;
+        }
+
+        .services {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 40px;
+            gap: 20px;
+            padding: 20px;
+            background-position: center;
+            background-repeat: no-repeat;
+            border-radius: 10px;
+        }
+
+        .service {
+            margin: 0;
+            font-size: 3em;
+            text-align: center;
+            color:#ffcc00;
+            text-shadow: 2px 2px 5px rgba (0, 0, 0, 0.7);
+        }
+
+        .box {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            width: 250px;
+            max-width: 100%;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+        }
+
+        .box img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+            transition: transform 0.3s ease;
+        }
+
+        .box img:hover {
+            transform: scale(1.1);
+        }
+
+        .box h5 {
+            margin: 10px 0 0;
+            font-size: 1.2em;
+            font-weight: bold;
+            color: #fff;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        .box a {
+            text-decoration: none;
+            color: white;
+            display: block;
+            padding: 5px 0;
+            font-size: 1.1em;
+            transition: color 0.3s ease;
+        }
+
+        .box a:hover {
+            color: #ffcc00;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 0;
+            background: linear-gradient(to right, #8fa3c5, #215dc5);
+            color: white;
+            font-size: 1.0em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .footer h3 {
+            margin: 0;
+            font-size: 1.8em;
+            color: #ffcc00;
+            text-shadow: 1px 1px 2px #000;
+        }
+
+        @media (max-width: 768px) {
+            .header ul {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .services {
+                flex-direction: column;
+                align-items: center;
+                gap: 30px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .services {
+                gap: 20px;
+            }
+
+            .box {
+                width: 90%;
+            }
+        }
+
+        /* Chatbot Styles */
+        .chatbot-container {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 300px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            display: none;
+        }
+
+        .chatbot-header {
+            background: #215dc5;
+            color: white;
+            padding: 10px;
+            text-align: center;
+            font-size: 1.2em;
+            font-weight: bold;
+        }
+
+        .chatbot-body {
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            background: #f1f1f1;
+        }
+
+        .chatbot-input {
+            display: flex;
+            padding: 10px;
+            background: #ddd;
+        }
+
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        .chatbot-input button {
+            background: #215dc5;
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            margin-left: 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .chatbot-toggle {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #215dc5;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px;
+            border-radius: 5px;
+            max-width: 80%;
+        }
+
+        .user-message {
+            background: #215dc5;
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background: #fff;
+            color: #333;
+            margin-right: auto;
+        }
+    </style>
+</head>
+<body>
+    <!-- Video Background -->
+    <video class="video-background" autoplay loop muted>
+        <source src="../static/vid/indexbg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="header">
+        <nav>
+            <h1>
+                <img src="../static/img/hywinbg.png" alt="" style="height: 60px; vertical-align: middle; margin-right: 10px;">
+                Hywin Engineering & Co</h1>
+            <h4>Marine & Industrial Equipment Repairs</h4>
+            <ul>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
+                <li><a href="{{ url_for('about') }}">About Us</a></li>
+                <li><a href="{{ url_for('enquiry') }}">Enquiry</a></li>
+                <li><a href="{{ url_for('contact') }}">Contact</a></li>
+                <li><a href="{{ url_for('broucher') }}">Brochure</a></li>
+                <li><a href="{{ url_for('career') }}">Career</a></li> 
+            </ul>
+        </nav>
+    </div>
+    
+    <div class="slideshow-container">
+        <div class="slides">
+            <img src="../static/img/enquirybg.jpg" alt="Slide 1">
+        </div>
+        <div class="slides">
+            <img src="../static/img/bgship.jpg" alt="Slide 2">
+        </div>
+        <div class="slides">
+            <img src="../static/slideimg/slide1.jpg" alt="Slide 3">
+        </div>
+        <div class="slides">
+            <img src="../static/slideimg/slide2.jpg" alt="Slide 4">
+        </div>
+        <div class="slides">
+            <img src="../static/slideimg/slide3.jpg" alt="Slide 5">
+        </div>
+        <div class="slides">
+            <img src="../static/slideimg/slide4.jpg" alt="Slide 6">
+        </div>
+    </div>
+
+    <div class="dot-container">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
+        <span class="dot" onclick="currentSlide(4)"></span>
+        <span class="dot" onclick="currentSlide(5)"></span>
+        <span class="dot" onclick="currentSlide(6)"></span>
+    </div>
+
+    <h1 class="service">Our Services</h1>
+    <div class="services">
+        <div class="box">
+            <a href="{{ url_for('ac') }}">
+                <img src="../static/acimg/ac1.jpg" alt="AC Installation">
+                <h5>AC Installation</h5>
+            </a>
+        </div>
+    
+        <div class="box">
+            <a href="{{ url_for('fab') }}">
+                <img src="../static/img/fabrication.jpg" alt="Fabrication">
+                <h5>Fabrication</h5>
+            </a>
+        </div>
+        
+        <div class="box">
+            <a href="{{ url_for('repairs') }}">
+                <img src="../static/img/repairs.jpg" alt="Repairs">
+                <h5>Repairs</h5>
+            </a>
+        </div>
+    </div>
+    
+    <div class="footer">
+        <h3>Anchor here 24x7</h3>
+    </div>
+
+    <!-- Chatbot -->
+    <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
+    <div class="chatbot-container" id="chatbotContainer">
+        <div class="chatbot-header">Chatbot</div>
+        <div class="chatbot-body" id="chatbotBody">
+            <div class="message bot-message">Hello! How can I assist you today?</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatInput" placeholder="Type a message...">
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <!-- JavaScript for Slideshow -->
+    <script>
+        let slideIndex = 0;
+        showSlides();
+
+        function currentSlide(n) {
+            clearTimeout(slideTimeout);
+            slideIndex = n - 1;
+            showSlides();
+        }
+
+        let slideTimeout;
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slides");
+            let dots = document.getElementsByClassName("dot");
+
+            if (slideIndex >= slides.length) {
+                slideIndex = 0;
+            } 
+            if (slideIndex < 0) {
+                slideIndex = slides.length - 1;
+            }
+
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";
+            }
+
+            for (let i = 0; i < dots.length; i++) {
+                dots[i].className = dots[i].className.replace(" active", "");
+            }
+
+            slides[slideIndex].style.display = "block";
+            dots[slideIndex].className += " active";
+
+            slideIndex++;
+            slideTimeout = setTimeout(showSlides, 2000);
+        }
+    </script>
+
+    <!-- JavaScript for Chatbot -->
+    <script>
+        function toggleChatbot() {
+            const chatbotContainer = document.getElementById("chatbotContainer");
+            chatbotContainer.style.display = chatbotContainer.style.display === "none" ? "block" : "none";
+        }
+
+        function sendMessage() {
+            const chatInput = document.getElementById("chatInput");
+            const chatbotBody = document.getElementById("chatbotBody");
+
+            if (chatInput.value.trim() === "") return;
+
+            // Add user message
+            const userMessage = document.createElement("div");
+            userMessage.className = "message user-message";
+            userMessage.textContent = chatInput.value;
+            chatbotBody.appendChild(userMessage);
+
+            // Bot response
+            const botMessage = document.createElement("div");
+            botMessage.className = "message bot-message";
+            botMessage.textContent = getBotResponse(chatInput.value);
+            chatbotBody.appendChild(botMessage);
+
+            // Clear input and scroll to bottom
+            chatInput.value = "";
+            chatbotBody.scrollTop = chatbotBody.scrollHeight;
+        }
+
+        function getBotResponse(userMessage) {
+    const lowerCaseMessage = userMessage.toLowerCase();
+
+    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
+        return "Hello! Welcome to Hywin Engineering & Co. How can I assist you today?";
+    } else if (lowerCaseMessage.includes("service") || lowerCaseMessage.includes("what do you do")) {
+        return "We specialize in Marine & Industrial Equipment Repairs, including AC Installation, Fabrication, and Repairs. How can we help you?";
+    } else if (lowerCaseMessage.includes("contact") || lowerCaseMessage.includes("how to reach")) {
+        return "You can reach us via our Contact page or call us at +123-456-7890. We're here to help!";
+    } else if (lowerCaseMessage.includes("about") || lowerCaseMessage.includes("who are you")) {
+        return "Hywin Engineering & Co is a leading provider of marine and industrial equipment repair services. We ensure quality and reliability in every project.";
+    } else if (lowerCaseMessage.includes("ac") || lowerCaseMessage.includes("air conditioning")) {
+        return "We offer professional AC installation services for marine and industrial setups. Let us know your requirements!";
+    } else if (lowerCaseMessage.includes("fabrication")) {
+        return "Our fabrication services include custom metalwork and structural solutions tailored to your needs.";
+    } else if (lowerCaseMessage.includes("repair") || lowerCaseMessage.includes("fix")) {
+        return "We provide expert repair services for marine and industrial equipment. Describe your issue, and we'll assist you further.";
+    } else if (lowerCaseMessage.includes("thank you") || lowerCaseMessage.includes("thanks")) {
+        return "You're welcome! Let us know if you need further assistance.";
+    } else {
+        return "I'm here to help! Please ask about our services, contact details, or anything else related to Hywin Engineering & Co.";
+    }
+}
+    </script>
+</body>
+</html>
