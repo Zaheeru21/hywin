@@ -13,17 +13,11 @@
             line-height: 1.6;
             position: relative;
             overflow-x: hidden;
-        }
-
-        /* Full-screen video background */
-        .video-background {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            z-index: -1;
+            background-image: url('../static/vid/indexbg.jpg'); /* Replace with your image path */
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
         }
 
         .header {
@@ -256,6 +250,15 @@
             text-align: center;
             font-size: 1.2em;
             font-weight: bold;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chatbot-header .close-btn {
+            cursor: pointer;
+            font-size: 1.5em;
+            line-height: 1;
         }
 
         .chatbot-body {
@@ -323,12 +326,6 @@
     </style>
 </head>
 <body>
-    <!-- Video Background -->
-    <video class="video-background" autoplay loop muted>
-        <source src="../static/vid/indexbg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
-
     <div class="header">
         <nav>
             <h1>
@@ -407,12 +404,15 @@
     <!-- Chatbot -->
     <button class="chatbot-toggle" onclick="toggleChatbot()">💬</button>
     <div class="chatbot-container" id="chatbotContainer">
-        <div class="chatbot-header">Chatbot</div>
+        <div class="chatbot-header">
+            Chatbot
+            <span class="close-btn" onclick="toggleChatbot()">×</span>
+        </div>
         <div class="chatbot-body" id="chatbotBody">
             <div class="message bot-message">Hello! How can I assist you today?</div>
         </div>
         <div class="chatbot-input">
-            <input type="text" id="chatInput" placeholder="Type a message...">
+            <input type="text" id="chatInput" placeholder="Type a message..." onkeypress="handleKeyPress(event)">
             <button onclick="sendMessage()">Send</button>
         </div>
     </div>
@@ -461,7 +461,16 @@
     <script>
         function toggleChatbot() {
             const chatbotContainer = document.getElementById("chatbotContainer");
-            chatbotContainer.style.display = chatbotContainer.style.display === "none" ? "block" : "none";
+            const isVisible = chatbotContainer.style.display === "block";
+
+            if (isVisible) {
+                chatbotContainer.style.display = "none";
+            } else {
+                // Reset chatbot to initial state
+                const chatbotBody = document.getElementById("chatbotBody");
+                chatbotBody.innerHTML = '<div class="message bot-message">Hello! How can I assist you today?</div>';
+                chatbotContainer.style.display = "block";
+            }
         }
 
         function sendMessage() {
@@ -487,29 +496,35 @@
             chatbotBody.scrollTop = chatbotBody.scrollHeight;
         }
 
-        function getBotResponse(userMessage) {
-    const lowerCaseMessage = userMessage.toLowerCase();
+        function handleKeyPress(event) {
+            if (event.key === "Enter") {
+                sendMessage();
+            }
+        }
 
-    if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
-        return "Hello! Welcome to Hywin Engineering & Co. How can I assist you today?";
-    } else if (lowerCaseMessage.includes("service") || lowerCaseMessage.includes("what do you do")) {
-        return "We specialize in Marine & Industrial Equipment Repairs, including AC Installation, Fabrication, and Repairs. How can we help you?";
-    } else if (lowerCaseMessage.includes("contact") || lowerCaseMessage.includes("how to reach")) {
-        return "You can reach us via our Contact page or call us at +123-456-7890. We're here to help!";
-    } else if (lowerCaseMessage.includes("about") || lowerCaseMessage.includes("who are you")) {
-        return "Hywin Engineering & Co is a leading provider of marine and industrial equipment repair services. We ensure quality and reliability in every project.";
-    } else if (lowerCaseMessage.includes("ac") || lowerCaseMessage.includes("air conditioning")) {
-        return "We offer professional AC installation services for marine and industrial setups. Let us know your requirements!";
-    } else if (lowerCaseMessage.includes("fabrication")) {
-        return "Our fabrication services include custom metalwork and structural solutions tailored to your needs.";
-    } else if (lowerCaseMessage.includes("repair") || lowerCaseMessage.includes("fix")) {
-        return "We provide expert repair services for marine and industrial equipment. Describe your issue, and we'll assist you further.";
-    } else if (lowerCaseMessage.includes("thank you") || lowerCaseMessage.includes("thanks")) {
-        return "You're welcome! Let us know if you need further assistance.";
-    } else {
-        return "I'm here to help! Please ask about our services, contact details, or anything else related to Hywin Engineering & Co.";
-    }
-}
+        function getBotResponse(userMessage) {
+            const lowerCaseMessage = userMessage.toLowerCase();
+
+            if (lowerCaseMessage.includes("hello") || lowerCaseMessage.includes("hi")) {
+                return "Hello! Welcome to Hywin Engineering & Co. How can I assist you today?";
+            } else if (lowerCaseMessage.includes("service") || lowerCaseMessage.includes("what do you do")) {
+                return "We specialize in Marine & Industrial Equipment Repairs, including AC Installation, Fabrication, and Repairs. How can we help you?";
+            } else if (lowerCaseMessage.includes("contact") || lowerCaseMessage.includes("how to reach")) {
+                return "You can reach us via our Contact page or call us at +123-456-7890. We're here to help!";
+            } else if (lowerCaseMessage.includes("about") || lowerCaseMessage.includes("who are you")) {
+                return "Hywin Engineering & Co is a leading provider of marine and industrial equipment repair services. We ensure quality and reliability in every project.";
+            } else if (lowerCaseMessage.includes("ac") || lowerCaseMessage.includes("air conditioning")) {
+                return "We offer professional AC installation services for marine and industrial setups. Let us know your requirements!";
+            } else if (lowerCaseMessage.includes("fabrication")) {
+                return "Our fabrication services include custom metalwork and structural solutions tailored to your needs.";
+            } else if (lowerCaseMessage.includes("repair") || lowerCaseMessage.includes("fix")) {
+                return "We provide expert repair services for marine and industrial equipment. Describe your issue, and we'll assist you further.";
+            } else if (lowerCaseMessage.includes("thank you") || lowerCaseMessage.includes("thanks")) {
+                return "You're welcome! Let us know if you need further assistance.";
+            } else {
+                return "I'm here to help! Please ask about our services, contact details, or anything else related to Hywin Engineering & Co.";
+            }
+        }
     </script>
 </body>
 </html>
