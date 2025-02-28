@@ -11,38 +11,36 @@
             margin: 0;
             padding: 0;
             color: #333;
-            position: relative; /* Position relative for absolute positioning of video */
-            overflow: hidden; /* Prevents scrollbars from appearing */
+            position: relative;
+            overflow: hidden;
+            background-image: url('../static/vid/indexbg.jpg');
+            background-size: cover;
+            background-position: center;
         }
-        video {
-            position: fixed; /* Use fixed positioning to keep it in place */
-            top: 0; /* Align to the top */
-            left: 0; /* Align to the left */
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            object-fit: cover; /* Cover the entire viewport while maintaining aspect ratio */
-            z-index: -1; /* Send video to the back */
-        }
+
         h1 {
             font-size: xx-large;
             font-family: Verdana, Tahoma, sans-serif;
             text-align: center;
             color: #fefeff;
         }
+
         .header {
-            width: 100%; /* Ensure header takes the full width of the page */
-            background: #3949ab; /* Semi-transparent background */
-            color: #ffffff; 
-            padding: 40px 0; /* Adjust padding for spacing */
+            width: 100%;
+            background: #3949ab;
+            color: #ffffff;
+            padding: 40px 0;
             text-align: center;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
             animation: slideIn 1s ease-out;
         }
+
         .header nav {
             display: flex;
             justify-content: center;
             align-items: center;
         }
+
         .header ul {
             list-style: none;
             padding: 0;
@@ -50,9 +48,11 @@
             display: flex;
             gap: 20px;
         }
+
         .header ul li {
             margin: 0;
         }
+
         .header ul li a {
             text-decoration: none;
             color: white;
@@ -62,19 +62,21 @@
             transition: background 0.3s ease, color 0.3s ease;
             font-size: 1.1em;
         }
+
         .header ul li a:hover {
             background: rgba(255, 255, 255, 0.2);
             color: #ffffff;
         }
+
         .contact-info {
             border: 1px solid #ccc;
             padding: 50px;
             border-radius: 5px;
-            background-color: white; /* White background */
-            background-image: url('img/hywinbg.png'); /* Background image */
-            background-size: cover; /* Cover the entire section */
-            background-position: center; /* Center the background image */
-            background-repeat: no-repeat; /* Prevent repeating the background image */
+            background-color: white;
+            background-image: url('img/hywinbg.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
             max-width: 500px;
             margin: 0 auto;
@@ -85,18 +87,22 @@
         p {
             line-height: 1.6;
             margin: 10px 0;
-            color: #333; /* Ensure text is readable */
+            color: #333;
         }
+
         strong {
             color: #007bff;
         }
+
         a {
             color: #007bff;
             text-decoration: none;
         }
+
         a:hover {
             text-decoration: underline;
         }
+
         @media (max-width: 600px) {
             .contact-info {
                 padding: 20px;
@@ -105,7 +111,7 @@
                 font-size: 24px;
             }
         }
-        /* Animations */
+
         @keyframes fadeIn {
             0% { opacity: 0; }
             100% { opacity: 1; }
@@ -120,27 +126,24 @@
             0% { opacity: 0 ; transform: translateY(20px); }
             100% { opacity: 1; transform: translateY(0); }
         }
+
         .footer {
-    background: linear-gradient(to right, #8fa3c5, #215dc5);
-    color: white;
-    text-align: center;
-    padding: 1px;
-    font-size: 1em;
-    position: fixed;
-    width: 100%;
-    bottom: 0;
+            background: linear-gradient(to right, #8fa3c5, #215dc5);
+            color: white;
+            text-align: center;
+            padding: 1px;
+            font-size: 1em;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
         }
     </style>
 </head>
 <body>
-    <video autoplay muted loop>
-        <source src="../static/vid/indexbg.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-    </video>
     <div class="header">
         <nav>
             <ul>
-                <li><a href="{{ url_for('index') }}"">Home</a></li>
+                <li><a href="{{ url_for('index') }}">Home</a></li>
                 <li><a href="{{ url_for('about') }}">About us</a></li>
                 <li><a href="{{ url_for('enquiry') }}">Enquiry</a></li>
                 <li><a href="{{ url_for('contact') }}">Contact</a></li>
@@ -156,11 +159,8 @@
         <p><strong>Mobile Number:</strong> +91 9884445185</p>
         <p><strong>Mobile Number:</strong> +91 9952978105</p>
     </div>
-
-
-<div class="footer">
-    <p>© 2025 Hywin Engineering & Co. All Rights Reserved.</p>
-</div>
-
+    <div class="footer">
+        <p>© 2025 Hywin Engineering & Co. All Rights Reserved.</p>
+    </div>
 </body>
 </html>
