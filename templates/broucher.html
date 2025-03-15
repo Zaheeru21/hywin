@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hywin Brochure</title>
+    <style>
+body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: #f0f0f0;
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-image: url('../static/img/BrouchBG.jpg'); /* Replace with your image path */
+    background-size: cover;
+    background-position: center;
+    }
+
+        h1 {
+            margin-bottom: 10px;
+            font-size: 2.5em;
+            color: #3949ab;
+        }
+        h2 {
+            margin-bottom: 30px;
+            font-size: 1.5em;
+            color: #666;
+        }
+        .slideshow-container {
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            margin: auto;
+            border: 2px solid #3949ab;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .slides {
+            display: none;
+            width: 100%;
+            height: auto; /* Ensure image retains aspect ratio */
+        }
+        .active {
+            display: block;
+            animation: fade 2s; /* Add fade animation */
+        }
+        @keyframes fade {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            margin-top: -22px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+        .download-button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            margin-top: 20px;
+            border-radius: 5px;
+            font-size: 1.2em;
+            transition: background-color 0.3s;
+        }
+        .download-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+    <h1>THIS IS OUR BROCHURE</h1>
+    <h2>YOU CAN DOWNLOAD BELOW</h2>
+    <div class="slideshow-container">
+        <!-- Slide 1 -->
+        <div class="slides active">
+            <img src="../static/temp/b1.jpg" alt="Brochure Image 1" style="width:100%">
+        </div>
+        <!-- Slide 2 -->
+        <div class="slides">
+            <img src="../static/temp/b2.jpg" alt="Brochure Image 2" style="width:100%">
+        </div>
+        <!-- Slide 3 -->
+        <div class="slides">
+            <img src="../static/temp/b3.jpg" alt="Brochure Image 3" style="width:100%">
+        </div>
+        <!-- Slide 4 -->
+        <div class="slides">
+            <img src="../static/temp/b4.jpg" alt="Brochure Image 4" style="width:100%">
+        </div>
+         <!-- Slide 5 -->
+        <div class="slides">
+            <img src="../static/temp/b5.jpg" alt="Brochure Image 5" style="width:100%">
+        </div>
+
+        <!-- Navigation buttons -->
+        <a class="prev" onclick="plusSlides(-1)">❮</a>
+        <a class="next" onclick="plusSlides(1)">❯</a>
+    </div>
+
+    <!-- Download Brochure button -->
+    <a href="../static/temp/Hywin123.pdf" download>
+        <button class="download-button">Download Brochure</button>
+    </a>
+
+    <script>
+        let slideIndex = 0;
+        showSlides(slideIndex);
+
+        function plusSlides(n) {
+            showSlides(slideIndex += n);
+        }
+
+        function showSlides(n) {
+            let i;
+            let slides = document.getElementsByClassName(" slides");
+            if (n >= slides.length) {slideIndex = 0} // Reset to first slide if exceeded
+            if (n < 0) {slideIndex = slides.length - 1} // Go to last slide if underflow
+            for (i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none"; // Hide all slides
+            }
+            slides[slideIndex].style.display = "block"; // Show the current slide
+        }
+    </script>
+</body>
+</html>

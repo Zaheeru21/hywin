@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AC INSTALLATION</title>
+    <style>
+        body {
+            background-image: url('../static/img/eqbg.jpg'); /* Add your background image here */
+            background-size: cover; /* Make sure it covers the entire page */
+            background-position: center; /* Center the background image */
+            background-repeat: no-repeat;
+            font-family: 'Arial', sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+            height: 100vh; /* Full viewport height */
+        }
+        header {
+            background-color: rgba(38, 5, 254, 0.996);
+            padding: 20px 0;
+            text-align: center; /* Center the header text */
+        }
+        h1 {
+            font-size: 2.5em;
+            margin: 0;
+        }
+        .container {
+            display: flex;
+            justify-content: space-between;
+            align-items: stretch; /* Stretch the items to the full height */
+            height: 100vh; /* Full viewport height */
+            padding: 20px;
+            overflow: hidden; /* Prevent scrolling within the container */
+        }
+        .images {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            flex: 1;
+            justify-content: flex-start;
+            align-items: flex-start;
+            overflow-y: auto; /* Allow scrolling within the image section if necessary */
+        }
+        .box {
+            background: rgba(0, 0, 0, 0.6);
+            border-radius: 10px;
+            text-align: center;
+            padding: 20px;
+            width: 250px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            max-width: 100%;
+        }
+        .box:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        .box img {
+            max-width: 100%;
+            height: auto;
+            margin-bottom: 15px;
+            border-radius: 5px;
+        }
+        .intro {
+            background: rgba(149, 185, 226, 0.8); /* Slightly transparent background */
+            padding: 20px;
+            margin-left: 20px;
+            border-radius: 10px;
+            color: #000000;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            flex: 1;
+            height: 100%; /* Make the intro section stretch vertically */
+        }
+        .intro p {
+            line-height: 1.8;
+            font-size: 1.5em;
+            color: #000000;
+            margin: 0;
+            word-wrap: break-word; /* Break long words to prevent overflow */
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+
+        @keyframes slideIn {
+            0% {
+                transform: translateX(-50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeInText {
+            0% {
+                opacity: 0;
+            }
+            100% {
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Welcome to AC Installation Services</h1>
+    </header>
+    <div class="container">
+        <div class="images">
+            <div class="box">
+                <img src="../static/acimg/ac1.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac2.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac3.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac4.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac5.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac6.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac7.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac8.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac9.jpg" alt="AC">
+            </div>
+            <div class="box">
+                <img src="../static/acimg/ac10.jpg" alt="AC">
+            </div>
+        </div>
+        <div class="intro">
+            <p>Overhauling and servicing of Air-Conditioning and Refrigeration (AC&R) systems onboard vessels involves a thorough range of maintenance activities designed to ensure the efficient and reliable performance of these critical systems in the unique and challenging marine environment. This includes inspecting, cleaning, and repairing essential components such as compressors, condensers, evaporators, and thermostats, along with checking refrigerant levels, ensuring proper airflow, and verifying system pressure. Due to the demanding conditions at sea, AC&R systems are subject to increased wear and tear, making regular servicing crucial to prevent breakdowns and ensure the comfort and safety of the crew, as well as the preservation of perishable goods. The servicing may also involve upgrading components to meet updated safety and environmental standards, ensuring the vessel remains compliant with international regulations and operates efficiently throughout its voyage.</p>
+        </div>
+    </div>
+</body>
+</html>
