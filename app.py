@@ -4,13 +4,21 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import psycopg2
 
-# Load environment variables from .env
+# Load environment variables from a .env file
 load_dotenv()
 
+# Debug prints to verify environment variables are loaded properly
+print("DB_HOST:", os.getenv('DB_HOST'))
+print("DB_USER:", os.getenv('DB_USER'))
+print("DB_NAME:", os.getenv('DB_NAME'))
+print("MAIL_USERNAME:", os.getenv('MAIL_USERNAME'))
+
 app = Flask(__name__)
+
+# Set the Flask secret key (required for sessions, flash messages, etc.)
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
-# Configure Mail
+# Configure Mail using environment variables
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
@@ -27,16 +35,10 @@ def get_db_connection():
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
         dbname=os.getenv('DB_NAME'),
-        port=os.getenv('DB_PORT', 5432)
+        port=int(os.getenv('DB_PORT', 5432))  # Defaults to 5432 if not set
     )
 
-# Error handler for catching exceptions globally
-@app.errorhandler(Exception)
-def handle_exception(e):
-    return f"An error occurred: {str(e)}", 500
-
-# Routes with GET and HEAD support (HEAD usually handled automatically if GET is allowed)
-@app.route('/')
+@app.route('/', methods=['GET'])
 def index():
     return render_template("index.html")
 
@@ -47,7 +49,7 @@ def enquiry():
         email = request.form['email']
         phone = request.form['phone']
         message = request.form['message']
-
+        
         # Send email
         try:
             msg = Message(
@@ -61,7 +63,7 @@ def enquiry():
             mail.send(msg)
         except Exception as e:
             return f"An error occurred while sending the email: {str(e)}"
-
+        
         # Save to PostgreSQL
         try:
             conn = get_db_connection()
@@ -74,39 +76,42 @@ def enquiry():
             cursor.close()
             conn.close()
             return "Enquiry submitted successfully! We will get back to you soon."
-
+        
         except Exception as e:
             return f"An error occurred while saving the enquiry: {str(e)}"
-
+        
     return render_template('enquiry.html')
 
-@app.route('/acinstallation')
+# Additional routes as before...
+
+@app.route('/acinstallation', methods=['GET'])
 def ac():
     return render_template("acinstallation.html")
 
-@app.route('/about')
+@app.route('/about', methods=['GET'])
 def about():
     return render_template("about.html")
 
-@app.route('/contact')
+@app.route('/contact', methods=['GET'])
 def contact():
     return render_template("contact.html")
 
-@app.route('/broucher')
+@app.route('/broucher', methods=['GET'])
 def broucher():
     return render_template("broucher.html")
 
-@app.route('/career')
+@app.route('/career', methods=['GET'])
 def career():
     return render_template("career.html")
 
-@app.route('/fabrication')
+@app.route('/fabrication', methods=['GET'])
 def fab():
     return render_template("fabrication.html")
 
-@app.route('/repairs')
+@app.route('/repairs', methods=['GET'])
 def repairs():
     return render_template("repairs.html")
 
+# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
