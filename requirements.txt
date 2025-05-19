@@ -1,5 +1,4 @@
 Flask
-mysql-connector-python
 Flask-Mail
 psycopg2-binary
 gunicorn
