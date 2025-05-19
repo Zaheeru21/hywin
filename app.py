@@ -2,30 +2,31 @@ import os
 from flask import Flask, request, render_template
 from flask_mail import Mail, Message
 from dotenv import load_dotenv
-import mysql.connector
+import psycopg2
 
-# Load environment variables from a .env file (for local testing)
+# Load environment variables from a .env file
 load_dotenv()
 
 app = Flask(__name__)
 
 # Configure Mail using environment variables
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'  # Example: Gmail SMTP server
-app.config['MAIL_PORT'] = 465  # SSL port
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
-app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')  # Environment variable
-app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')  # Environment variable
-app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')  # Use the same as MAIL_USERNAME
+app.config['MAIL_USERNAME'] = os.getenv('MAIL_USERNAME')
+app.config['MAIL_PASSWORD'] = os.getenv('MAIL_PASSWORD')
+app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 
 mail = Mail(app)
 
-# Configure MySQL connection using environment variables
+# PostgreSQL connection function
 def get_db_connection():
-    return mysql.connector.connect(
-        host=os.getenv('DB_HOST'),      # Environment variable for DB host (e.g., RDS endpoint)
-        user=os.getenv('DB_USER'),      # Environment variable for DB user
-        password=os.getenv('DB_PASSWORD'),  # Environment variable for DB password
-        database=os.getenv('DB_NAME')   # Environment variable for DB name
+    return psycopg2.connect(
+        host=os.getenv('DB_HOST'),
+        user=os.getenv('DB_USER'),
+        password=os.getenv('DB_PASSWORD'),
+        dbname=os.getenv('DB_NAME'),
+        port=os.getenv('DB_PORT', 5432)  # Optional: defaults to 5432
     )
 
 @app.route('/', methods=['GET'])
@@ -35,7 +36,6 @@ def index():
 @app.route('/enquiry', methods=['GET', 'POST'])
 def enquiry():
     if request.method == 'POST':
-        # Get form data
         name = request.form['name']
         email = request.form['email']
         phone = request.form['phone']
@@ -44,8 +44,8 @@ def enquiry():
         # Send email
         try:
             msg = Message(
-                'New Enquiry Submission',  # Email subject
-                recipients=[os.getenv('MAIL_USERNAME')],  # Email recipient
+                'New Enquiry Submission',
+                recipients=[os.getenv('MAIL_USERNAME')],
                 body=f'You have a new enquiry from {name}.\n\n'
                      f'Email: {email}\n'
                      f'Phone: {phone}\n'
@@ -55,16 +55,14 @@ def enquiry():
         except Exception as e:
             return f"An error occurred while sending the email: {str(e)}"
         
-        # Save enquiry to the database
+        # Save to PostgreSQL
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
-
             cursor.execute("""
                 INSERT INTO enquiries (name, email, phone, message)
                 VALUES (%s, %s, %s, %s)
             """, (name, email, phone, message))
-            
             conn.commit()
             cursor.close()
             conn.close()
@@ -104,7 +102,6 @@ def fab():
 def repairs():
     return render_template("repairs.html")
 
-# Ensure the app runs correctly
+# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
-
