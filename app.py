@@ -9,6 +9,9 @@ load_dotenv()
 
 app = Flask(__name__)
 
+# Set the Flask secret key (required for sessions, flash messages, etc.)
+app.secret_key = os.getenv('FLASK_SECRET_KEY')
+
 # Configure Mail using environment variables
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
@@ -26,7 +29,7 @@ def get_db_connection():
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
         dbname=os.getenv('DB_NAME'),
-        port=os.getenv('DB_PORT', 5432)  # Optional: defaults to 5432
+        port=os.getenv('DB_PORT', 5432)  # Defaults to 5432 if not set
     )
 
 @app.route('/', methods=['GET'])
