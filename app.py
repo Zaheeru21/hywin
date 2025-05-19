@@ -4,15 +4,15 @@ from flask_mail import Mail, Message
 from dotenv import load_dotenv
 import psycopg2
 
-# Load environment variables from a .env file
+# Load environment variables from .env file
 load_dotenv()
 
 app = Flask(__name__)
 
-# Set the Flask secret key (required for sessions, flash messages, etc.)
+# Set the secret key for session management, flash messages, etc.
 app.secret_key = os.getenv('FLASK_SECRET_KEY')
 
-# Configure Mail using environment variables
+# Configure Flask-Mail using environment variables
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'
 app.config['MAIL_PORT'] = 465
 app.config['MAIL_USE_SSL'] = True
@@ -22,14 +22,13 @@ app.config['MAIL_DEFAULT_SENDER'] = os.getenv('MAIL_USERNAME')
 
 mail = Mail(app)
 
-# PostgreSQL connection function
 def get_db_connection():
     return psycopg2.connect(
         host=os.getenv('DB_HOST'),
         user=os.getenv('DB_USER'),
         password=os.getenv('DB_PASSWORD'),
         dbname=os.getenv('DB_NAME'),
-        port=os.getenv('DB_PORT', 5432)  # Defaults to 5432 if not set
+        port=os.getenv('DB_PORT', 5432)
     )
 
 @app.route('/', methods=['GET'])
@@ -43,8 +42,8 @@ def enquiry():
         email = request.form['email']
         phone = request.form['phone']
         message = request.form['message']
-        
-        # Send email
+
+        # Send email notification
         try:
             msg = Message(
                 'New Enquiry Submission',
@@ -56,9 +55,9 @@ def enquiry():
             )
             mail.send(msg)
         except Exception as e:
-            return f"An error occurred while sending the email: {str(e)}"
-        
-        # Save to PostgreSQL
+            return f"An error occurred while sending the email: {e}"
+
+        # Save enquiry to PostgreSQL database
         try:
             conn = get_db_connection()
             cursor = conn.cursor()
@@ -70,41 +69,39 @@ def enquiry():
             cursor.close()
             conn.close()
             return "Enquiry submitted successfully! We will get back to you soon."
-        
         except Exception as e:
-            return f"An error occurred while saving the enquiry: {str(e)}"
-        
+            return f"An error occurred while saving the enquiry: {e}"
+
     return render_template('enquiry.html')
 
-# Additional routes
-@app.route('/acinstallation', methods=['GET'])
-def ac():
+# Additional static pages
+@app.route('/acinstallation')
+def acinstallation():
     return render_template("acinstallation.html")
 
-@app.route('/about', methods=['GET'])
+@app.route('/about')
 def about():
     return render_template("about.html")
 
-@app.route('/contact', methods=['GET'])
+@app.route('/contact')
 def contact():
     return render_template("contact.html")
 
-@app.route('/broucher', methods=['GET'])
+@app.route('/broucher')
 def broucher():
     return render_template("broucher.html")
 
-@app.route('/career', methods=['GET'])
+@app.route('/career')
 def career():
     return render_template("career.html")
 
-@app.route('/fabrication', methods=['GET'])
-def fab():
+@app.route('/fabrication')
+def fabrication():
     return render_template("fabrication.html")
 
-@app.route('/repairs', methods=['GET'])
+@app.route('/repairs')
 def repairs():
     return render_template("repairs.html")
 
-# Run app
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8000, debug=True)
